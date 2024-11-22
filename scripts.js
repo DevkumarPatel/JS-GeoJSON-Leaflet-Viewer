@@ -38,14 +38,11 @@ setTimeout(() => {
 
 // Beautify JSON
 function beautifyCode() {
-    const error = document.getElementById('error');
     try {
         const beautified = JSON.stringify(JSON.parse(editor.getValue()), null, 2);
         editor.setValue(beautified);
-        error.style.display = 'none';
     } catch (e) {
-        error.textContent = 'Invalid JSON: ' + e.message;
-        error.style.display = 'block';
+        showError('Invalid JSON', e.message);
     }
 }
 
@@ -73,7 +70,6 @@ function convertToFeatureCollection(geojsonData) {
 
 // Display GeoJSON on the map
 function displayOnMap() {
-    const error = document.getElementById('error');
     try {
         if (currentLayer) {
             map.removeLayer(currentLayer);
@@ -105,9 +101,26 @@ function displayOnMap() {
         }).addTo(map);
 
         map.fitBounds(currentLayer.getBounds());
-        error.style.display = 'none';
     } catch (e) {
-        error.textContent = e.message;
-        error.style.display = 'block';
+        showError('Invalid GeoJSON', e.message);
     }
+}
+
+// Clear the map
+function clearMap() {
+    if (currentLayer) {
+        map.removeLayer(currentLayer);
+        currentLayer = null;
+    }
+    Swal.fire('Map Cleared', 'All features have been removed from the map.', 'success');
+}
+
+// Display errors using SweetAlert2
+function showError(title, message) {
+    Swal.fire({
+        icon: 'error',
+        title: title,
+        text: message,
+        confirmButtonText: 'OK'
+    });
 }

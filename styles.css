@@ -49,6 +49,14 @@ body, html {
     background: #1976D2;
 }
 
+.button-group .clear-btn {
+    background: #f44336;
+}
+
+.button-group .clear-btn:hover {
+    background: #d32f2f;
+}
+
 .split-container {
     display: flex;
     height: calc(100vh - 50px); /* Full height minus navbar */
@@ -57,7 +65,6 @@ body, html {
 .map-container,
 .editor-container {
     height: 100%;
-    width: 90%;
     overflow: hidden;
 }
 
@@ -73,10 +80,4 @@ body, html {
     border: 1px solid #ddd;
     border-radius: 4px;
     overflow-y: auto;
-}
-
-.error {
-    color: #d32f2f;
-    margin: 10px;
-    display: none;
 }
