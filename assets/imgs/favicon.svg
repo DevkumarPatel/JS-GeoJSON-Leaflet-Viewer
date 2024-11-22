@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- File shape -->
+  <path d="M6 2c-1.1 0-2 .9-2 2v24c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V10l-8-8H6z" fill="white"/>
+  <path d="M20 2v8h8l-8-8z" fill="#e5e7eb"/>
+  
+  <!-- Globe -->
+  <circle cx="16" cy="18" r="6" fill="none" stroke="#dc2626" stroke-width="2"/>
+  
+  <!-- Curly braces -->
+  <path d="M12 14c0-1 1-1.5 1.5-1.5s1.5.5 1.5 1.5M17 22c0 1-1 1.5-1.5 1.5s-1.5-.5-1.5-1.5" 
+        fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+</svg>

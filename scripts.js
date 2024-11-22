@@ -10,11 +10,44 @@ const editor = CodeMirror(document.getElementById('editor'), {
 
 // Initialize the map
 const map = L.map('map').setView([-31.95, 115.95], 6);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+const baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
 let currentLayer = null;
+
+// Add a default base layer (optional fallback)
+const defaultBaseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+// Containers for base and overlay maps
+const baseMaps = {};
+const overlayMaps = {};
+
+
+optional_tiles.forEach(source => {
+    // Process datasets (base maps)
+    source.datasets.forEach(dataset => {
+        const tileLayer = L.tileLayer(dataset.endpoint, {
+            attribution: dataset.attribution || `Source: <a href="${source.link}" target="_blank">${source.name}</a>`
+        });
+        baseMaps[dataset.name] = tileLayer; // Add to baseMaps
+    });
+
+    // Process overlays
+    source.overlays.forEach(overlay => {
+        const overlayLayer = L.tileLayer(overlay.endpoint, {
+            attribution: overlay.attribution || `Source: <a href="${source.link}" target="_blank">${source.name}</a>`
+        });
+        overlayMaps[overlay.name] = overlayLayer; // Add to overlayMaps
+    });
+});
+
+// Add layer control
+L.control.layers(baseMaps, overlayMaps, { collapsed: true }).addTo(map);
+
+
 
 // Split.js initialization
 const splitInstance = Split(['#map', '#editor'], {
