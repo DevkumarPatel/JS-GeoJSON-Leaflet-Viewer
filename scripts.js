@@ -9,17 +9,14 @@ const editor = CodeMirror(document.getElementById('editor'), {
 });
 
 // Initialize the map
-const map = L.map('map').setView([-31.95, 115.95], 6);
-const baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+const map = L.map('map').setView([-31.95, 115.85], 14);
+const baseLayer = L.tileLayer('http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
 let currentLayer = null;
 
-// Add a default base layer (optional fallback)
-const defaultBaseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-}).addTo(map);
+
 
 // Containers for base and overlay maps
 const baseMaps = {};
