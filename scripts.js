@@ -199,11 +199,7 @@ if (geojsonParam) {
 }
 
 
-// Listen for editor changes and update map
-editor.on('change', () => {
-    const geojsonText = editor.getValue();
-    displayGeoJSON(geojsonText);
-});
+
 
 // Generate a shareable link with the current GeoJSON
 function generateShareLink() {
