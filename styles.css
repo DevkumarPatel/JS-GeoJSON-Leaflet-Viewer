@@ -82,3 +82,17 @@ body, html {
     overflow-y: auto;
 }
 
+.share-btn {
+    background: #f57c00;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.share-btn:hover {
+    background: #e65100;
+}

@@ -154,3 +154,117 @@ function showError(title, message) {
         confirmButtonText: 'OK'
     });
 }
+
+// Utility function to parse URL query parameters
+function getQueryParam(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(param);
+}
+
+// Function to display GeoJSON on the map
+function displayGeoJSON(geojson) {
+    try {
+        const parsedGeoJSON = JSON.parse(geojson);
+
+        // Remove existing layer
+        if (currentLayer) {
+            map.removeLayer(currentLayer);
+        }
+
+        // Add new GeoJSON layer
+        currentLayer = L.geoJSON(parsedGeoJSON).addTo(map);
+        map.fitBounds(currentLayer.getBounds());
+    } catch (error) {
+        console.error("Invalid GeoJSON:", error.message);
+        alert("Invalid GeoJSON provided.");
+    }
+}
+
+// Check for GeoJSON query parameter
+// Check for GeoJSON query parameter
+const geojsonParam = getQueryParam('geojson');
+if (geojsonParam) {
+    try {
+        const decodedGeoJSON = decodeURIComponent(geojsonParam);
+        editor.setValue(decodedGeoJSON);
+
+        // Beautify the code
+        beautifyCode();
+
+        // Display the GeoJSON on the map
+        displayGeoJSON(decodedGeoJSON);
+    } catch (error) {
+        console.error("Error decoding GeoJSON parameter:", error.message);
+    }
+}
+
+
+// Listen for editor changes and update map
+editor.on('change', () => {
+    const geojsonText = editor.getValue();
+    displayGeoJSON(geojsonText);
+});
+
+// Generate a shareable link with the current GeoJSON
+function generateShareLink() {
+    const geojsonText = editor.getValue();
+
+    try {
+        // Validate the GeoJSON
+        const parsedGeoJSON = JSON.parse(geojsonText);
+
+        // Encode the GeoJSON into a query parameter
+        const encodedGeoJSON = encodeURIComponent(JSON.stringify(parsedGeoJSON));
+
+        // Get the current domain and path
+        const baseUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
+
+        // Create the shareable URL
+        const shareableUrl = `${baseUrl}?geojson=${encodedGeoJSON}`;
+
+        // Display the modal with a copy button
+        Swal.fire({
+            icon: 'success',
+            title: 'Shareable Link',
+            html: `
+                <p>Click the button below to copy the link:</p>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <input id="shareable-link" type="text" value="${shareableUrl}" readonly style="flex: 1; padding: 5px; border: 1px solid #ccc; border-radius: 4px;" />
+                    <button id="copy-button" style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        Copy
+                    </button>
+                </div>
+            `,
+            showConfirmButton: false,
+            showCloseButton: true,
+            didOpen: () => {
+                // Add click event to the Copy button
+                document.getElementById('copy-button').addEventListener('click', () => {
+                    const linkInput = document.getElementById('shareable-link');
+                    linkInput.select();
+                    navigator.clipboard.writeText(linkInput.value).then(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Copied!',
+                            text: 'The link has been copied to your clipboard.',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }).catch(err => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to copy the link. Please try again.',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    });
+                });
+            }
+        });
+    } catch (error) {
+        // Handle invalid GeoJSON
+        showError('Invalid GeoJSON', 'Cannot generate a share link for invalid GeoJSON.');
+    }
+}
+
