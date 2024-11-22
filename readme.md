@@ -1,5 +1,5 @@
 # GeoJSON Leaflet Map Viewer
----
+
 
 A lightweight web-based tool for visualizing and editing GeoJSON data. This application allows users to paste GeoJSON, beautify it, and render it on an interactive map using **Leaflet** and **CodeMirror**. The interface includes a draggable splitter for adjustable viewing of the map and code editor.
 
@@ -13,7 +13,7 @@ A lightweight web-based tool for visualizing and editing GeoJSON data. This appl
 
 ## Demo
 
-You can try the live demo [here](#).
+You can try the live demo [devkumarpatel.github.io/JS-GeoJSON-Leaflet-Viewer](https://devkumarpatel.github.io/JS-GeoJSON-Leaflet-Viewer/).
 
 ## Getting Started
 
@@ -25,8 +25,8 @@ To run this project locally, you'll need a modern web browser and a basic local 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/geojson-map-viewer.git
-   cd geojson-map-viewer
+   git clone https://github.com/DevkumarPatel/JS-GeoJSON-Leaflet-Viewer.git
+   cd JS-GeoJSON-Leaflet-Viewer
    ```
 
 2. Open the `index.html` file in your browser:
@@ -38,7 +38,7 @@ To run this project locally, you'll need a modern web browser and a basic local 
 ### Folder Structure
 
 ```
-geojson-map-viewer/
+JS-GeoJSON-Leaflet-Viewer/
 ├── index.html       # Main HTML file
 ├── styles.css       # Custom CSS for styling
 ├── scripts.js       # Core JavaScript logic
